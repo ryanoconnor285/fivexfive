@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../../../config/keys');
 
 // Load User model
 const User = require('../../models/User');
@@ -8,7 +10,7 @@ const User = require('../../models/User');
 // @route   GET api/users/test
 // @desc    Tests user route
 // @access  Public
-router.get('/test', (req, res) => res.json({msg: "Users Works"}));
+router.get('/test', (req, res) => res.json({ msg: 'Users Works' }));
 
 // @route   POST api/users/register
 // @desc    Register a new user
@@ -17,7 +19,7 @@ router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email })
     .then( user => {
       if (user) {
-        return res.status(400).json({email: 'Email already in use.'});
+        return res.status(400).json({ email: 'Email already in use.' });
       } else {
         const newUser = new User({
           name: req.body.name,
@@ -51,16 +53,23 @@ router.post('/login', (req, res) => {
     .then(user => {
       // Check for User
       if(!user) {
-        return res.status(404).json({email: 'Email not found'});
+        return res.status(404).json({ email: 'Email not found' });
       }
 
       // Check Password
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            res.json({msg: 'Success'})
+            // User matched
+
+            const payload = { id: user.id, name: user.name } // Create JWT Payload
+
+            // Sign Token
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: 10800 }, (err, token) => {
+              res.json({ success: true, token: 'Bearer ' + token})
+            });
           } else {
-            return res.status(400).json({password: 'Password incorrect'});
+            return res.status(400).json({ password: 'Password incorrect' });
           }
         })
     })
