@@ -6,28 +6,28 @@ const WorkoutSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  title: {
-    // Workout A or
-    type: String,
-    required: true
+  currentWeight: {
+    type: Number
   },
-  exercises: [
-    {
-      name: {
-        type: String,
-        required: true
-      },
-      weight: {
-        type: Number,
-        workingSet: Boolean,
-        required: true
-      }
-    }
-  ],
+  deadlift: {
+    type: Number
+  },
+  benchpress: {
+    type: Number
+  },
+  squat: {
+    type: Number
+  },
+  shoulderPress: {
+    type: Number
+  },
+  row: {
+    type: Number
+  },
   date: {
     type: Date,
     default: Date.now
   }
-})
+});
 
 module.exports = Workout = mongoose.model('workouts', WorkoutSchema); 
