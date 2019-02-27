@@ -8,7 +8,7 @@ const Dashboard = () => {
   return(
     <div>  
     <div className="row">
-      <div className="col s12 m4">
+      <div className="col m12 l4">
         <div className="card">
           <div className="card-image">
             <img src={image2} alt="weight plates"/>
@@ -18,11 +18,11 @@ const Dashboard = () => {
               <p>Continue where you left off.  Weight and progress will be tracked automatically.</p>
             </div>
             <div className="card-action">
-              <Link to="/workout">New Workout</Link>
+              <Link to="/workouts">New Workout</Link>
             </div>
           </div>
         </div>
-        <div className="col s12 m4">
+        <div className="col m12 l4">
           <div className="card">
             <div className="card-image">
               <img src={image1} alt="weight plates" />
@@ -36,7 +36,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="col s12 m4">
+        <div className="col m12 l4">
           <div className="card">
             <div className="card-image">
               <img src={image3} alt="weight plates" />
