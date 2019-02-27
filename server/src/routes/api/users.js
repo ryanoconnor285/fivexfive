@@ -35,7 +35,8 @@ router.post('/register', (req, res) => {
         return res.status(400).json({ errors });
       } else {
         const newUser = new User({
-          name: req.body.name,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           email: req.body.email,
           password: req.body.password
         });
@@ -103,7 +104,8 @@ router.post('/login', (req, res) => {
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.json({
     id: req.user.id,
-    name: req.user.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.user.email,
   });
 });
