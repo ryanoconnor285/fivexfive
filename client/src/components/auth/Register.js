@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 class Register extends React.Component {
   constructor(props) {
@@ -10,6 +14,12 @@ class Register extends React.Component {
       password: '',
       confirmPassword: '',
       errors: {}
+    }
+  }
+
+  componentWillReceiveProps(nextprops) {
+    if(nextprops.errors) {
+      this.setState({ errors: nextprops.errors });
     }
   }
 
@@ -28,12 +38,14 @@ class Register extends React.Component {
       email: this.state.email,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword
-    }
+    };
 
-    console.log(newUser)
+    this.props.registerUser(newUser, this.props.history);
   }
 
   render() { 
+    const { errors } = this.state;
+
     return ( 
       <div className="container">
         <div className="row">
@@ -46,10 +58,11 @@ class Register extends React.Component {
                   value={this.state.firstName}
                   id="first_name" 
                   type="text" 
-                  className="validate"
+                  className={errors.firstName ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="first_name">First Name</label>
+                <span>{errors.firstName ? errors.firstName : null}</span>
               </div>
               <div className="input-field col s6">
                 <input
@@ -58,10 +71,11 @@ class Register extends React.Component {
                   value={this.state.lastName}
                   id="last_name"
                   type="text"
-                  className="validate"
+                  className={errors.lastName ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="last_name">Last Name</label>
+                <span>{errors.lastName ? errors.lastName : null}</span>
               </div>
             </div>
             <div className="row">
@@ -72,10 +86,11 @@ class Register extends React.Component {
                   value={this.state.email}
                   id="email"
                   type="email"
-                  className="validate"
+                  className={errors.email ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="email">Email</label>
+                <span>{errors.email ? errors.email : null}</span>
               </div>
             </div>
             <div className="row">
@@ -86,10 +101,11 @@ class Register extends React.Component {
                   value={this.state.password}
                   id="password"
                   type="password"
-                  className="validate"
+                  className={errors.password ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="password">Password</label>
+                <span>{errors.password ? errors.password : null}</span>
               </div>
             </div>
             <div className="row">
@@ -100,10 +116,11 @@ class Register extends React.Component {
                   value={this.state.confirmPassword}
                   id="confirmPassword"
                   type="password"
-                  className="validate"
+                  className={errors.confirmPassword ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="confirmPassword">Confirm Password</label>
+                <span>{errors.confirmPassword ? errors.confirmPassword : null}</span>
               </div>
             </div>
             <button 
@@ -120,5 +137,17 @@ class Register extends React.Component {
     );
   }
 }
+
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
  
-export default Register;
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));
