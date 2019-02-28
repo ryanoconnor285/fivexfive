@@ -26,6 +26,7 @@ class Navbar extends React.Component {
             <Link to="/" className="brand-logo">Dashboard</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><Link to="/login">Log In</Link></li>
+              <li><Link to="/register">Register</Link></li>
               <li><Link to="/logout">Log Out</Link></li>
               <li><Link to="/profile">Profile</Link></li>
             </ul>
@@ -35,6 +36,7 @@ class Navbar extends React.Component {
 
         <ul className="sidenav" id="mobile-demo">
           <li><Link to="/login">Log In</Link></li>
+          <li><Link to="/register">Register</Link></li>
           <li><Link to="/logout">Log Out</Link></li>
           <li><Link to="/profile">Profile</Link></li>
         </ul>
