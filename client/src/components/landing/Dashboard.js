@@ -5,15 +5,15 @@ import image3 from '../../images/pexels-photo-416717.jpeg';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  return(
+  return (
     <div>  
-    <div className="row">
-      <div className="col m12 l4">
-        <div className="card">
-          <div className="card-image">
-            <img src={image2} alt="weight plates"/>
-              <span className="card-title">Start a Workout</span>
-        </div>
+      <div className="row">
+        <div className="col m12 l4">
+          <div className="card">
+            <div className="card-image">
+              <img src={image2} alt="weight plates"/>
+                <span className="card-title">Start a Workout</span>
+            </div>
             <div className="card-content">
               <p>Continue where you left off.  Weight and progress will be tracked automatically.</p>
             </div>
