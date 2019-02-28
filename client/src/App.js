@@ -13,27 +13,32 @@ import Register from './components/auth/Register';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+import store from './store'
 import './App.css';
+
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Route exact path="/" component={Dashboard} />
-          <div className="container">
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
+      <Provider store={ store }>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Route exact path="/" component={Dashboard} />
+            <div className="container">
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
 
-            <Route path="/workouts" component={Workout} />
-            <Route path="/progress" component={Progress} />
-            <Route path="/discover" component={Discover} />
+              <Route path="/workouts" component={Workout} />
+              <Route path="/progress" component={Progress} />
+              <Route path="/discover" component={Discover} />
+            </div>
+
+            <Footer />
           </div>
-
-          <Footer />
-        </div>
-      </Router>
+        </Router>
+      </Provider>
     );
   }
 }
