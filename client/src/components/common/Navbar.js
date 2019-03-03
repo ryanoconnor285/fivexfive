@@ -1,7 +1,10 @@
 import React from 'react';
 import M from "materialize-css";
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+ 
 class Navbar extends React.Component {
 
   componentDidMount() {
@@ -11,8 +14,27 @@ class Navbar extends React.Component {
     });
   }
 
-  render() {
+  handleLogout = (e) => {
+    e.preventDefault();
+    this.props.logoutUser();
+  }
 
+  render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <div>
+        <li><Link to="/login" onClick={this.handleLogout}>Log Out</Link></li>
+        <li><Link to="/profile">Profile</Link></li>
+      </div>
+    );
+
+    const guestLinks = (
+      <div>
+        <li><Link to="/login">Log In</Link></li>
+        <li><Link to="/register">Register</Link></li>
+      </div>
+    );
 
     const menuStyle = {
       color: 'rgba(255, 255, 255, 1)'
@@ -23,26 +45,29 @@ class Navbar extends React.Component {
         <nav>
           <div className="nav-wrapper center-align grey darken-3">
             <button data-target="mobile-demo" className="waves-effect waves-white btn-flat sidenav-trigger hide-on-large-only"><i className="material-icons md-light" style={menuStyle}>menu</i></button>
-            <Link to="/" className="brand-logo">Dashboard</Link>
+            <Link to={isAuthenticated ? "/dashboard" : "/landing"} className="brand-logo">Strength Training</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><Link to="/login">Log In</Link></li>
-              <li><Link to="/register">Register</Link></li>
-              <li><Link to="/logout">Log Out</Link></li>
-              <li><Link to="/profile">Profile</Link></li>
+              {isAuthenticated ? authLinks : guestLinks}
             </ul>
           </div>
         </nav>
 
 
         <ul className="sidenav" id="mobile-demo">
-          <li><Link to="/login">Log In</Link></li>
-          <li><Link to="/register">Register</Link></li>
-          <li><Link to="/logout">Log Out</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
+          {isAuthenticated ? authLinks : guestLinks}
         </ul>
       </div>
     );
   }
 }
+
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.auth
+});
  
-export default Navbar;
+export default connect(mapStateToProps, { logoutUser })(Navbar);
