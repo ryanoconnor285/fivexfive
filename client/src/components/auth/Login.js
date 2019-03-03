@@ -1,5 +1,7 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions'
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -7,6 +9,21 @@ class Login extends React.Component {
       email: '',
       password: '',
       errors: {}
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors })
+    }
+    if(nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -19,15 +36,17 @@ class Login extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const newUser = {
+    const userData = {
       email: this.state.email,
       password: this.state.password
     }
 
-    console.log(newUser)
+    this.props.loginUser(userData);
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="container">
         <div className="row">
@@ -40,10 +59,11 @@ class Login extends React.Component {
                   value={this.state.email}
                   id="email"
                   type="email"
-                  className="validate"
+                  className={errors.email ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="email">Email</label>
+                <span>{errors.email ? errors.email : null}</span>
               </div>
             </div>
             <div className="row">
@@ -54,10 +74,11 @@ class Login extends React.Component {
                   value={this.state.password}
                   id="password"
                   type="password"
-                  className="validate"
+                  className={errors.password ? "invalid" : "validate"}
                   onChange={this.onChange}
                 />
                 <label htmlFor="password">Password</label>
+                <span>{errors.password ? errors.password : null}</span>
               </div>
             </div>
             <button
@@ -75,4 +96,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
