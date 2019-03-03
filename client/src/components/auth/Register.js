@@ -16,6 +16,12 @@ class Register extends React.Component {
       errors: {}
     }
   }
+  
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
 
   componentWillReceiveProps(nextprops) {
     if(nextprops.errors) {
@@ -53,7 +59,6 @@ class Register extends React.Component {
             <div className="row">
               <div className="input-field col s6">
                 <input 
-                  placeholder="First Name" 
                   name="firstName"
                   value={this.state.firstName}
                   id="first_name" 
@@ -66,7 +71,6 @@ class Register extends React.Component {
               </div>
               <div className="input-field col s6">
                 <input
-                  placeholder="Last Name"
                   name="lastName"
                   value={this.state.lastName}
                   id="last_name"
@@ -81,7 +85,6 @@ class Register extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input
-                  placeholder="Email"
                   name="email"
                   value={this.state.email}
                   id="email"
@@ -96,7 +99,6 @@ class Register extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input
-                  placeholder="Password"
                   name="password"
                   value={this.state.password}
                   id="password"
@@ -111,7 +113,6 @@ class Register extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input
-                  placeholder="Confirm Password"
                   name="confirmPassword"
                   value={this.state.confirmPassword}
                   id="confirmPassword"
