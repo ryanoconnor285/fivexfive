@@ -1,53 +1,56 @@
 import React from 'react';
+import parallaxImage1 from '../../images/pexels-photo-685530.jpeg';
+import parallaxImage2 from '../../images/bodybuilding-close-up-dumbbells-260352.jpg';
+import M from 'materialize-css'
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Landing = () => {
-  return (
-    <div>
-      <div className="row">
-        <div className="col m12 l4">
-          <div className="card">
-            <div className="card-image">
-              <span className="card-title">Start a Workout</span>
-            </div>
-            <div className="card-content">
-              <p>Continue where you left off.  Weight and progress will be tracked automatically.</p>
-            </div>
-            <div className="card-action">
-              <Link to="/workouts">New Workout</Link>
-            </div>
+class Landing extends React.Component {
+
+  componentDidMount() {
+    document.addEventListener('DOMContentLoaded', () => {
+      let elems = document.querySelectorAll('.parallax');
+      M.Parallax.init(elems);
+    });
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
+  render() {
+    return (
+      <div> 
+        <div className="parallax-container">
+          <div className="parallax">
+            <img src={parallaxImage1} alt='lifting heavy' />
           </div>
         </div>
-        <div className="col m12 l4">
-          <div className="card">
-            <div className="card-image">
-              <span className="card-title">View Progress</span>
-            </div>
-            <div className="card-content">
-              <p>View your strength gains over time.  Look back at recorded workouts.</p>
-            </div>
-            <div className="card-action">
-              <Link to="/progress">View Progress</Link>
-            </div>
+        <div className="section white">
+          <div className="row container">
+            <h2 className="header">Parallax</h2>
+            <p className="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
+            <Link to="/login">Log In</Link>
           </div>
         </div>
-        <div className="col m12 l4">
-          <div className="card">
-            <div className="card-image">
-              <span className="card-title">Discover</span>
-            </div>
-            <div className="card-content">
-              <p>Find new routines, exercises, tips and tricks to keep you on track and getting stronger.</p>
-            </div>
-            <div className="card-action">
-              <Link to="/discover">Discover</Link>
-            </div>
+        <div className="parallax-container">
+          <div className="parallax">
+            <img src={parallaxImage2} alt='lifting heavy' />
           </div>
         </div>
       </div>
-    </div>
-
-  );
+    );
+  }
 };
 
-export default Landing;
+Landing.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Landing);
