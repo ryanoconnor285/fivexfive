@@ -15,12 +15,11 @@ class Navbar extends React.Component {
   }
 
   handleLogout = (e) => {
-    e.preventDefault();
     this.props.logoutUser();
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
 
     const authLinks = (
       <div>
@@ -41,11 +40,11 @@ class Navbar extends React.Component {
     };
 
     return (
-      <div>
+      <div className="row">
         <nav>
           <div className="nav-wrapper center-align grey darken-3">
             <button data-target="mobile-demo" className="waves-effect waves-white btn-flat sidenav-trigger hide-on-large-only"><i className="material-icons md-light" style={menuStyle}>menu</i></button>
-            <Link to={isAuthenticated ? "/dashboard" : "/landing"} className="brand-logo">Strength Training</Link>
+            <Link to={isAuthenticated ? "/dashboard" : "/"} className="brand-logo center">Strength Training</Link>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               {isAuthenticated ? authLinks : guestLinks}
             </ul>
@@ -59,7 +58,7 @@ class Navbar extends React.Component {
       </div>
     );
   }
-}
+};
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
