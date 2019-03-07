@@ -2,6 +2,9 @@ import React from 'react';
 import image1 from '../../images/pexels-photo-669576.jpeg';
 import image2 from '../../images/sports-fitness-body-building-iron-161557.jpeg';
 import image3 from '../../images/pexels-photo-416717.jpeg';
+import Preloader from '../common/Preloader';
+
+import { getCurrentProfile } from '../../actions/profileActions';
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -13,11 +16,36 @@ class Dashboard extends React.Component {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push('/');
     }
+    this.props.getCurrentProfile();
   }
 
   render() {
+    const { user } = this.props.auth;
+    const { profile, loading } = this.props.profile;
+
+    let registrationPrompt;
+
+    if ( profile === null || loading ) {
+      registrationPrompt = <Preloader />;
+    } else {
+      if (Object.keys(profile).length > 0) {
+        registrationPrompt = <h4>Profile goes here</h4>
+      } else {
+        registrationPrompt = (
+          <div className="card-panel right-align">
+            <span class="blue-text text-darken-2">{user.firstName} you need to add some info to your profile. </span>
+            <Link 
+              to="/create-profile" 
+              className="btn teal">
+              Create Profile
+            </Link>
+          </div>
+        )
+      }
+    }
     return (
       <div>
+      {registrationPrompt}
         <div className="row">
           <div className="col m12 l4">
             <div className="card">
@@ -68,13 +96,16 @@ class Dashboard extends React.Component {
 };
 
 Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    profile: state.profile
   }
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
