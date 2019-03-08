@@ -22,7 +22,7 @@ class Landing extends React.Component {
     return (
       <div> 
         <div className="parallax-container">
-          <div className="">
+          <div className="parallax">
             <img src={parallaxImage1} alt='lifting heavy' />
           </div>
         </div>
