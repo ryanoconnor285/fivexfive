@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
       } else {
         registrationPrompt = (
           <div className="card-panel right-align">
-            <span class="blue-text text-darken-2">{user.firstName} you need to add some info to your profile. </span>
+            <span className="blue-text text-darken-2">{user.firstName} you need to add some info to your profile. </span>
             <Link 
               to="/create-profile" 
               className="btn teal">
