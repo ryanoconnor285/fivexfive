@@ -47,9 +47,9 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
   if (req.body.shoulderPress) workoutFields.shoulderPress = req.body.shoulderPress;
   if (req.body.row) workoutFields.row = req.body.row;
   
-  new Workout(workoutFields)
-    .save()
+  new Workout(workoutFields).save()
     .then(workout => res.json(workout))
+
 });
 
 module.exports = router;
