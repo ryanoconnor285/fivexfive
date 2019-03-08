@@ -1,5 +1,5 @@
 import React from 'react';
-import parallaxImage1 from '../../images/pexels-photo-685530.jpeg';
+import parallaxImage1 from '../../images/pexels-photo-305239.jpeg';
 import parallaxImage2 from '../../images/bodybuilding-close-up-dumbbells-260352.jpg';
 import M from 'materialize-css'
 import { Link } from 'react-router-dom';
@@ -9,20 +9,20 @@ import { connect } from 'react-redux';
 class Landing extends React.Component {
 
   componentDidMount() {
-    document.addEventListener('DOMContentLoaded', () => {
-      let elems = document.querySelectorAll('.parallax');
-      M.Parallax.init(elems);
-    });
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
+    document.addEventListener('DOMContentLoaded', () => {
+      let parallax = document.querySelectorAll('.parallax');
+      M.Parallax.init(parallax);
+    });
   }
 
   render() {
     return (
       <div> 
         <div className="parallax-container">
-          <div className="parallax">
+          <div className="">
             <img src={parallaxImage1} alt='lifting heavy' />
           </div>
         </div>
