@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
+import PrivateRoute from './components/common/PrivateRoute';
+
 import Landing from './components/landing/Landing';
 import Dashboard from './components/landing/Dashboard';
 import Navbar from './components/common/Navbar';
@@ -8,11 +10,14 @@ import Footer from './components/common/Footer';
 import Workout from './components/workouts/Workout';
 import Progress from './components/progress/Progress';
 import Discover from './components/discover/Discover';
+import Profile from './components/profile/Profile';
+import CreateProfile from './components/profile/CreateProfile';
+import EditProfile from './components/profile/EditProfile';
 
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
@@ -52,7 +57,18 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Route exact path="/" component={Landing} />
-            <Route exact path="/dashboard" component={Dashboard} />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/profile" component={Profile} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+            </Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
 
