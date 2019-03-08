@@ -7,8 +7,7 @@ const ProfileSchema = new Schema({
     ref: 'users'
   },
   currentWeight: {
-    type: Number,
-    default: 150
+    type: Number
   },
   siUnits: {
     type: Boolean,
