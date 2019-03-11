@@ -1,5 +1,4 @@
 import React from 'react';
-import parallaxImage1 from '../../images/pexels-photo-305239.jpeg';
 import parallaxImage2 from '../../images/bodybuilding-close-up-dumbbells-260352.jpg';
 import M from 'materialize-css'
 import { Link } from 'react-router-dom';
@@ -23,7 +22,7 @@ class Landing extends React.Component {
       <div> 
         <div className="parallax-container">
           <div className="parallax">
-            <img src={parallaxImage1} alt='lifting heavy' />
+            <img src={parallaxImage2} alt='lifting heavy' />
           </div>
         </div>
         <div className="section white">
