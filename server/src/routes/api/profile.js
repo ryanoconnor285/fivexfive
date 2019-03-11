@@ -31,9 +31,10 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 });
 
 // @route   POST api/profile
-// @desc    Create user's profile
+// @desc    Create or update user's profile
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+
   const profileFields = {};
   profileFields.user = req.user.id;
   if (req.body.currentWeight) profileFields.currentWeight = req.body.currentWeight;
@@ -57,7 +58,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         .catch(err => res.status(404).json(err));
       } else {
         // Create
-
         new Profile(profileFields).save()
           .then(profile => res.json(profile))
       }
