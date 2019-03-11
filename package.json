@@ -2,13 +2,13 @@
   "name": "weightlifting",
   "version": "1.0.0",
   "description": "",
-  "main": "./server/index.js",
+  "main": "./src/server.js --prefix",
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm install --prefix client && npm run build --prefix client",
-    "start": "npm run start --prefix client && npm run start --prefix server/src/server.js"
+    "start": "npm run start --prefix server/src/server.js"
   },
   "repository": {
     "type": "git",
