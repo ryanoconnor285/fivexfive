@@ -9,6 +9,8 @@
 /coverage
 /config
 
+/config/keys_dev.js
+
 # production
 /build
 
