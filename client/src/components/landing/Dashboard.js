@@ -2,6 +2,7 @@ import React from 'react';
 import image1 from '../../images/pexels-photo-669576.jpeg';
 import image2 from '../../images/sports-fitness-body-building-iron-161557.jpeg';
 import image3 from '../../images/pexels-photo-416717.jpeg';
+import Profile from '../profile/Profile';
 import Preloader from '../common/Preloader';
 
 import { getCurrentProfile } from '../../actions/profileActions';
@@ -22,25 +23,25 @@ class Dashboard extends React.Component {
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
-
     let registrationPrompt;
 
-    if ( profile === null || loading ) {
+    if (profile === null || loading) {
       registrationPrompt = <Preloader />;
     } else {
-      if (Object.keys(profile).length > 0) {
-        registrationPrompt = <h4>Profile goes here</h4>
+      // Check if logged in user has profile data
+      if ((typeof profile === 'object' && Object.keys(profile).length > 0)) {
+        registrationPrompt = null;
       } else {
+        // User is logged in but has no profile
         registrationPrompt = (
-          <div className="card-panel right-align">
-            <span className="blue-text text-darken-2">{user.firstName} you need to add some info to your profile. </span>
-            <Link 
-              to="/create-profile" 
-              className="btn teal">
+          <div>
+            <p className="lead text-muted">Welcome {user.firstName}</p>
+            <p>You have not yet setup a profile, please add some info</p>
+            <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
             </Link>
           </div>
-        )
+        );
       }
     }
     return (
@@ -90,15 +91,17 @@ class Dashboard extends React.Component {
             </div>
           </div>
         </div>
+        <Profile />
+        <div style={{ marginBottom: '60px' }} />
       </div>
     );
   }
 };
 
 Dashboard.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
