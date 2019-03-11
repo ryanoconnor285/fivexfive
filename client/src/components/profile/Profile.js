@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
+import { getCurrentProfile } from '../../actions/profileActions';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -43,35 +43,6 @@ class Profile extends React.Component {
     }
   }
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    let units;
-
-    if (this.state.siUnits === "false") {
-      units = false;
-    } else {
-      units = true;
-    }
-
-    const profileData = {
-      currentWeight: this.state.currentWeight,
-      siUnits: units,
-      deadlift: this.state.deadlift,
-      benchpress: this.state.benchpress,
-      squat: this.state.squat,
-      shoulderPress: this.state.shoulderPress,
-      row: this.state.row
-    }
-
-    this.props.createProfile(profileData, this.props.history);
-  }
-
   render() {
     return (
       <div className="edit-profile container">
@@ -80,14 +51,14 @@ class Profile extends React.Component {
             <table className="centered">
               <thead>
                 <tr>
-                  <th>Stats</th>
+                  <th>Current Stats</th>
                   <th>Weight in {this.state.siUnits ? "kilograms" : "pounds"}</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>Weight</td>
+                  <td>Body Weight</td>
                   <td>{this.state.currentWeight}</td>
                 </tr>
                 <tr>
@@ -114,7 +85,7 @@ class Profile extends React.Component {
             </table>
           </div>
           <div className="col s1">
-            <Link className="btn-floating btn-large waves-effect waves-light" to="/edit-profile">
+            <Link className="btn-floating btn-large waves-effect waves-light" to="/edit-profile" title="Edit Profile">
               <i className="material-icons  right-align">edit</i>
             </Link>
           </div>
@@ -125,7 +96,6 @@ class Profile extends React.Component {
 }
 
 Profile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -138,4 +108,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(Profile));
+export default connect(mapStateToProps, { getCurrentProfile })(withRouter(Profile));
