@@ -337,7 +337,6 @@
     "fs-extra": "^7.0.1",
     "fs-minipass": "^1.2.5",
     "fs.realpath": "^1.0.0",
-    "fsevents": "^1.2.4",
     "fs-write-stream-atomic": "^1.0.10",
     "function-bind": "^1.1.1",
     "gauge": "^2.7.4",
