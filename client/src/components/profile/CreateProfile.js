@@ -32,17 +32,10 @@ class CreateProfile extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    let units;
-
-    if (this.state.siUnits === "false") {
-      units = false;
-    } else {
-      units = true;
-    }
 
     const profileData = {
       currentWeight: this.state.currentWeight,
-      siUnits: units,
+      siUnits: this.state.siUnits,
       deadlift: this.state.deadlift,
       benchpress: this.state.benchpress,
       squat: this.state.squat,
