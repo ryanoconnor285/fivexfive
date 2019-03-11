@@ -14,7 +14,9 @@ class EditProfile extends React.Component {
       benchpress: '',
       squat: '',
       shoulderPress: '',
-      row: ''
+      row: '',
+      formValid: true,
+      errors: {}
     }
   }
 
@@ -50,17 +52,10 @@ class EditProfile extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    let units;
-
-    if (this.state.siUnits === "false") {
-      units = false;
-    } else {
-      units = true;
-    }
 
     const profileData = {
       currentWeight: this.state.currentWeight,
-      siUnits: units,
+      siUnits: this.state.siUnits,
       deadlift: this.state.deadlift,
       benchpress: this.state.benchpress,
       squat: this.state.squat,
@@ -72,6 +67,7 @@ class EditProfile extends React.Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="edit-profile container">
         <div className="row">
@@ -81,11 +77,11 @@ class EditProfile extends React.Component {
                 <input
                   id="currentWeight"
                   name="currentWeight"
-                  type="text"
-                  className="validate"
+                  type="number"
                   onChange={this.onChange}
                 />
                 <label htmlFor="currentWeight">Current Body Weight</label>
+                <span className="helper-text" data-error="wrong" data-success="right">{errors.currentWeight ? errors.currentWeight : null}</span>
               </div>
               <div className="col s6">
                 Preferred units:
@@ -127,7 +123,7 @@ class EditProfile extends React.Component {
                   id="deadlift"
                   name="deadlift"
                   value={this.state.value}
-                  type="text"
+                  type="number"
                   className="validate"
                   onChange={this.onChange}
                 />
@@ -140,7 +136,7 @@ class EditProfile extends React.Component {
                   id="benchpress"
                   name="benchpress"
                   value={this.state.value}
-                  type="text"
+                  type="number"
                   className="validate"
                   onChange={this.onChange}
                 />
@@ -153,11 +149,11 @@ class EditProfile extends React.Component {
                   id="squat"
                   name="squat"
                   value={this.state.value}
-                  type="text"
+                  type="number"
                   className="validate"
                   onChange={this.onChange}
                 />
-                <label htmlFor="benchpress">Bench Press</label>
+                <label htmlFor="squat">Squat</label>
               </div>
             </div>
             <div className="row">
@@ -166,7 +162,7 @@ class EditProfile extends React.Component {
                   id="shoulderPress"
                   name="shoulderPress"
                   value={this.state.value}
-                  type="text"
+                  type="number"
                   className="validate"
                   onChange={this.onChange}
                 />
@@ -179,14 +175,19 @@ class EditProfile extends React.Component {
                   id="row"
                   name="row"
                   value={this.state.value}
-                  type="text"
+                  type="number"
                   className="validate"
                   onChange={this.onChange}
                 />
                 <label htmlFor="row">Row</label>
               </div>
             </div>
-            <button className="btn-large" type="submit">Submit</button>
+            <div className="row">
+              <h5 className="helper-text large red lighten-2" data-error="wrong" data-success="right">{this.state.formValid ? null : "All weights must be numbers"}</h5>
+            </div>
+            <div className="row">
+              <button className={this.state.formValid ? "btn-large" : "btn-large disabled"} type="submit">Edit Profile</button>
+            </div>
           </form>
         </div>
       </div>
